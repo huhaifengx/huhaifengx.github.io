@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>OC | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="##NSLog 与 printf的不同
+1. NSLog接收oc字符串作为参数，printf接收c语言的字符串作为参数
+2. NSLog输出后会自动换行，printf在输出后不会自动换行
+3. 使用NSLog时，需要包含头文件#import &amp;lt;Foundition/Foundition.h&amp;gt;；而使用printf时，需要包含头文件#include&amp;lt;stdio.h&amp;gt;
+4. NS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OC">
+<meta property="og:url" content="http://yoursite.com/2015/04/30/OC/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="##NSLog 与 printf的不同
+1. NSLog接收oc字符串作为参数，printf接收c语言的字符串作为参数
+2. NSLog输出后会自动换行，printf在输出后不会自动换行
+3. 使用NSLog时，需要包含头文件#import &amp;lt;Foundition/Foundition.h&amp;gt;；而使用printf时，需要包含头文件#include&amp;lt;stdio.h&amp;gt;
+4. NS">
+<meta property="og:image" content="http://www.52nx.net/article/UploadPic/2011-10/2011101515463073132.png">
+<meta property="og:image" content="http://www.52nx.net/article/UploadPic/2011-7/2011772043927764.png">
+<meta property="og:updated_time" content="2015-04-30T04:13:04.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="OC">
+<meta name="twitter:description" content="##NSLog 与 printf的不同
+1. NSLog接收oc字符串作为参数，printf接收c语言的字符串作为参数
+2. NSLog输出后会自动换行，printf在输出后不会自动换行
+3. 使用NSLog时，需要包含头文件#import &amp;lt;Foundition/Foundition.h&amp;gt;；而使用printf时，需要包含头文件#include&amp;lt;stdio.h&amp;gt;
+4. NS">
+  
+    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-OC" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/04/30/OC/" class="article-date">
+  <time datetime="2015-04-30T03:49:42.000Z" itemprop="datePublished">2015-04-30</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      OC
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="http://www.52nx.net/article/UploadPic/2011-10/2011101515463073132.png" alt="image"></p>
+<p>##NSLog 与 printf的不同</p>
+<pre><code><span class="number">1.</span> NSLog接收oc字符串作为参数，<span class="built_in">printf</span>接收c语言的字符串作为参数
+<span class="number">2.</span> NSLog输出后会自动换行，<span class="built_in">printf</span>在输出后不会自动换行
+<span class="number">3.</span> 使用NSLog时，需要包含头文件<span class="preprocessor">#import &lt;Foundition/Foundition.h&gt;；而使用printf时，需要包含头文件#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span></span>
+<span class="number">4.</span> NSLog可以输出日期，时间戳，进程号等信息，而<span class="built_in">printf</span>不能输出这些信息
+</code></pre><h2 id="常用术语">常用术语</h2><p>面向过程 ： Procedure Oriented</p>
+<p>面向对象 ： Object Oriented ，<strong>简称OO</strong></p>
+<p>面向编程 ： Object Oriented Programming，<strong>简称OOP</strong></p>
+<h2 id="OC_语法">OC 语法</h2><ol>
+<li><strong>类的声明</strong></li>
+</ol>
+<pre><code><span class="class"><span class="keyword">@interface</span> 类名：父类（默认为 <span class="title">NSObject</span> 该类时根类）</span>
+
+{
+
+    定义成员变量；（默认情况下，成员变量为protect类型，）
+
+}    
+
+（ 可以用<span class="keyword">@public</span>将其定义为public类型，此时定义的属性或变量允许被外界访问）
+<span class="keyword">@property</span>(<span class="keyword">nonatomic</span>/atomic,<span class="keyword">readonly</span>/<span class="keyword">readwrite</span>,<span class="keyword">assign</span>/<span class="keyword">strong</span>/retain/wake)类型 属性名；（定义属性可以自动生成setter和getter方法）
+
+声明类方法；（标识 ＋ 该方法向类发消息）
+
+声明实例方法； （标识 － 该方法向对象发消息） 声明类方法时 返回值最好定义为`instancetype`类型
+
+<span class="keyword">@end</span>
+</code></pre><ol>
+<li><p><strong>类的实现</strong></p>
+<pre><code> <span class="variable">@implemention</span> 类名
+
+ － 实例方法
+｛
+        实现代码； 
+ ｝
+
+ ＋ 类fangfa
+｛ 
+        实现代码； 
+ ｝
+
+ 重写父类方法；
+ 如：descripition、 dealloc、init等
+
+ <span class="variable">@end</span>
+</code></pre><p>3.<strong>创建对象</strong></p>
+<pre><code><span class="number">1.</span>包含所创建类的头文件
+<span class="number">2.</span>类名 ＊对象名；
+<span class="number">2.1</span> 类名 ＊对象名 ＝ ［［类名 alloc］init］；（创建对象并为其分配内存、初始化）
+<span class="number">2.2</span> 类名 ＊对象名 ＝ ［类名 <span class="keyword">new</span>］；（每次都会创建出新的对象，并且返回对象的地址。）
+<span class="number">3.</span> 给对象赋值；（可以调用相应的类方法）；
+<span class="number">4.</span> 给对象发消息，完成所需要进行的操作；［对象 方法］；
+</code></pre></li>
+<li><p><strong>匿名对象</strong></p>
+<pre><code>方法调用：
+
+    ［［类名 <span class="literal">new</span>］方法］；／［［［类名 alloc］init］方法］；
+
+属性访问：
+
+    ［类名 <span class="literal">new</span>］<span class="subst">-&gt;</span>属性 ＝ 赋值；（外界访问定义为<span class="keyword">public</span>类型的属性）
+</code></pre></li>
+</ol>
+<h2 id="OC方法和函数的区别">OC方法和函数的区别</h2><pre><code>1. OC方法的声明只能在@interface 和 @<span class="operator"><span class="keyword">end</span>之间，只能在@implementation 和 @<span class="keyword">end</span>之间。即OC方法独立于类存在。
+<span class="number">2.</span> <span class="keyword">C</span>函数不属于类，跟类没有联系，<span class="keyword">C</span>函数所有权只属于定义函数的文件
+<span class="number">3.</span> <span class="keyword">C</span>函数不能访问OC对象的成员变量。</span>
+</code></pre><h2 id="OC语法细节">OC语法细节</h2><pre><code><span class="number">1.</span> 成员变量不能在｛｝中进行初始化、不能直接拿去访问
+<span class="number">2.</span> 方法的声明不能写在@end之后
+<span class="number">3.</span> 方法不能当作函数一样调用
+<span class="number">4.</span> 成员变量、方法不能用<span class="keyword">static</span>等关键字进行修饰
+</code></pre><h2 id="OC方法注意点">OC方法注意点</h2><pre><code>方法只有声明，没有实现（经典错误，系统提示警告）
+方法没有声明，只有实现（编译器警告，但是可以调用，OC的弱语法）
+编译的时候，访问没有定义的成员变量直接报错，调用没有的方法，只是警告
+没有<span class="class"><span class="keyword">@interface</span>，纸偶@<span class="title">implemenation</span>也可以成功定义一个类</span>
+        @implemenation Dog : <span class="built_in">NSObject</span>
+        {
+            <span class="keyword">int</span> _age;
+            <span class="built_in">NSString</span> *_name;
+        }
+
+        - (<span class="keyword">void</span>)print
+        {
+            <span class="built_in">NSLog</span>(<span class="string">@"The dog's name is %@,ang de it's %d years old!"</span>,_name,_age);
+        }
+        <span class="keyword">@end</span>
+
+@implemenation 中不能声明和<span class="class"><span class="keyword">@interface</span>一样的成员变量</span>
+</code></pre><p>!!! OC中有<code>BOOL</code>基本数据类型，其值是<code>YES</code>和<code>NO</code>，而不是true 和false，它实际上是一种对带符号的自负类型（signed char）的定义（typedef），它使用8为存储空间。<code>YES定义为1，NO定义为0</code>；</p>
+<p><img src="http://www.52nx.net/article/UploadPic/2011-7/2011772043927764.png" alt="image"></p>
+<h3 id="类方法he实例方法">类方法he实例方法</h3><ol>
+<li><p><strong>类方法</strong></p>
+<pre><code>＊ 该方法是直接可以用类名来执行的方法（类本身会在内存中占据存储空间，里面有类／对象方法列表）
+＊ 以加号 ＋ 开头
+＊ 只能用类名调用，对象不能调用
+＊ 类方法不能访问实例变量（成员变量）
+＊ 使用场合：当不需要访问成员变量时，尽量使用类方法
+＊ 类方法和对象方法可以同名
+</code></pre></li>
+<li><p><strong>实例方法</strong></p>
+<pre><code>＊ 该方法是用对象名来执行的方法
+＊ 以减号 — 开头
+＊ 只能用对象名调用，类不能调用，该方法没有对象是不能被执行的
+＊ 对象方法能访问实例变量（成员变量）
+</code></pre></li>
+</ol>
+<h3 id="setter和getter方法">setter和getter方法</h3><ol>
+<li><p><strong>setter和getter方法的使用场合</strong></p>
+<pre><code>@<span class="keyword">public</span>的成员可以随意被赋植，应该使用<span class="keyword">set</span>和<span class="keyword">get</span>方法来管理成员变量的访问
+</code></pre></li>
+<li><p><strong>setter方法</strong></p>
+<pre><code>作用：用来设置成员变量，可以在方法里面过滤一些不合理的值
+命名规范：方法以<span class="keyword">set</span>开头，而且后面跟上成员变量名，成员变量名必须首字母大写，尽量形参名称不要与成员变量名重名（成员变量名最好以下划线 _ 开头）
+返回值：一般为<span class="keyword">void</span>
+</code></pre></li>
+<li><p><strong>getter方法</strong></p>
+<pre><code>作用：返回对象内部的成员变量
+命名规范：方法名和成员变量名同名
+返回值：一般与成员变量的类型相同  
+</code></pre></li>
+</ol>
+<h3 id="self关键字">self关键字</h3><ol>
+<li><p><strong>成员变量和局部变量同名</strong></p>
+<pre><code>当成员变量和局部变量同名时，采取就近原则，访问的是局部变量
+当<span class="keyword">self</span>访问成员变量，区分同名的局部变量
+</code></pre></li>
+<li><p><strong>使用细节</strong></p>
+<pre><code><span class="number">1.</span> 出现的地方：所有的OC方法中（对象方法／类方法），不能出现在函数
+<span class="number">2.</span> 作用：
+    使用“<span class="built_in">self</span><span class="built_in">.</span>属性”访问当前方法中的成员变量
+    使用“<span class="built_in">self</span><span class="subst">-&gt; </span>成员变量”访问当前方法中<span class="keyword">public</span>成员变量
+    使用“［<span class="built_in">self</span> 方法］”调用方法（类方法／实例方法）
+<span class="number">3.</span> 类方法中<span class="built_in">self</span>只能调用类方法，实例方法中<span class="built_in">self</span>只能调用实例方法
+</code></pre></li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2015/04/30/OC/" data-id="cifktzrop0009cuyldu8nffat" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2015/10/10/huhaifengx/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          @huhaifengx
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2015/03/20/uilabel/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">UILabel</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  
+    
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">April 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">March 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">January 2015</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2015/10/10/Mac搭建hexo指南/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2015/10/10/house/">house</a>
+          </li>
+        
+          <li>
+            <a href="/2015/10/10/huhaifeng/">huhaifeng</a>
+          </li>
+        
+          <li>
+            <a href="/2015/10/10/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2015/10/10/huhaifengx-1/">huhaifengx</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2015 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+
+<script src="/js/script.js" type="text/javascript"></script>
+
+  </div>
+</body>
+</html>
