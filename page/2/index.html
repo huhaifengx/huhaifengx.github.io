@@ -61,10 +61,10 @@
       <div class="outer">
         <section id="main">
   
-    <article id="post-nil与null" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-协议" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2015/01/14/nil与null/" class="article-date">
-  <time datetime="2015-01-14T13:14:39.000Z" itemprop="datePublished">2015-01-14</time>
+    <a href="/2015/04/30/协议/" class="article-date">
+  <time datetime="2015-04-30T13:27:37.000Z" itemprop="datePublished">2015-04-30</time>
 </a>
     
   </div>
@@ -75,7 +75,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2015/01/14/nil与null/">nil与NUll</a>
+      <a class="article-title" href="/2015/04/30/协议/">协议</a>
     </h1>
   
 
@@ -83,38 +83,994 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>##总述<br>    nil用来给对象赋值（Object-C的任何对象都属于id类型），<br>    NULL则给任何指针赋值，NULL和nil不能互换，nil用于类指针赋值（在Object-C中类是一个对象，是类的meta-class的实例），<br>    而NSNull则用于集合操作，虽然它们表示的都是空值，但是使用场合完全不同，所以在编码时严格按照变量类型来赋值，将正确的空值赋给正确的类型，使代码易于阅读和维护，也不易引起错误。</p>
-<p>###1.oc最好 用nil   [ nil  任意方法],不会崩溃<br>     nil 是一个对象值。<br>     NULL是一个通用指针（泛型指针）。</p>
-<p>####2. NSNULL，NULL和nil在本质上一样，<br>    NULL和nil其实就是0，但是在Oc中，对于像NSArray这样的类型，nil或NULL不能做为加到其中的Object，如果定义了一个NSArray，为其分配了内存，又想设置其中的内容为空，则可以用[NSNULL null返回的对象来初始化NSArray中的内容，</p>
-<p>####3.NSArray和NSDictionary中nil中有特殊的含义(列表结束），不能在集合中放入nil值。如要确实需要存储一个表示“什么都没有”的值，可以使用NSNull类。NSNull只有一个方法：</p>
-<pre><code>+ (<span class="built_in">NSNull</span> *) null;
- 因为Object-C的集合对象，如<span class="built_in">NSArray</span>、<span class="built_in">NSDictionary</span>、<span class="built_in">NSSet</span>等，都有可能包含<span class="built_in">NSNull</span>对象，所以，如果一下代码中的item为<span class="built_in">NSNull</span>，则会引起程序崩溃。
-</code></pre><p>NSString *item=[NSArray objectAtIndex:i];<br>if([item isEqualToString:@”TestNumber”])<br>{<br>    //<br>}</p>
-<p>release对象没有设置为nil，从而引起程序崩溃。<br>id someObject=[[Object alloc] init];<br>//…<br>[someObject release];<br>//…<br>if(someObject)<br>{<br>    //crash here<br>}</p>
-<pre><code><span class="comment">//判断对象不空</span>
-<span class="keyword">if</span>(object) {}
-
-<span class="comment">//判断对象为空</span>
-<span class="keyword">if</span>(object == <span class="literal">nil</span>) {}
-
-<span class="comment">//数组初始化，空值结束</span>
-<span class="built_in">NSArray</span> *pageNames=[[<span class="built_in">NSArray</span> alloc] initWithObjects:<span class="string">@"DocumentList"</span>,<span class="string">@"AdvancedSearch"</span>,<span class="string">@"Statistics"</span>,<span class="literal">nil</span>];
-
-<span class="comment">//判断数组元素是否为空</span>
-<span class="built_in">UIViewController</span> *controller=[<span class="built_in">NSArray</span> objectAtIndex:i];
-<span class="keyword">if</span>((<span class="built_in">NSNull</span> *)controller == [<span class="built_in">NSNull</span> null])   {}
-
-
-<span class="comment">//判断字典对象的元素是否为空</span>
-<span class="built_in">NSString</span> *userId=[<span class="built_in">NSDictionary</span> objectForKey:<span class="string">@"UserId"</span>];
-<span class="keyword">if</span>(userId == [<span class="built_in">NSNull</span> null]) {}
-</code></pre><p>####特性<br>     Object-C特性，当发消息给nil对象时，系统返回0值而不是引起异常，因为nil是对象的合法值，nil对象同样可以接收消息，例如：<br>    person=nil;<br>    [person castBallot];<br>    NSLog(“person=%@”,person);</p>
-<p>对象置空，然后发送消息，程序同样接着往下执行而不会崩溃。 </p>
+        <h2 id="协议">协议</h2><ol>
+<li><p>基本用途</p>
+<ul>
+<li>可以用来声明一大堆方法（不能声明成员变量）</li>
+<li>只要某个类遵守了这个协议，就相当于拥有这个协议中的所有方法声明</li>
+<li>只要父类遵守了某个协议，就相当于子类也遵守了    </li>
+</ul>
+</li>
+<li><p>格式<br> @protocol 协议名</p>
+<p> 方法声明列表</p>
+<p> @end</p>
+<p> 某个类遵守某个协议</p>
+<p> @interface 类名 : 父类名&lt;协议名&gt;</p>
+<p> @end</p>
+</li>
+<li><p>关键字</p>
+<p> 协议中有2个关键字可以控制方法是否要实现（默认是@required），在大多数情况下，用途在于程序员之间的交流</p>
+<ul>
+<li>@required: 该关键字以下且@optional关键字以上的方法必须要实现（若不实现，编译器会发出警告</li>
+<li>@optional: 该关键字以下且@required关键字以上的方法可以选择性的实现</li>
+</ul>
+</li>
+<li><p>协议遵守协议</p>
+<ul>
+<li><p>一个协议可以遵守其他多个协议，多个协议之间用逗号 , 隔开</p>
+<ul>
+<li>一个协议遵守了其他协议，就相当于拥有了其他协议中的方法声明</li>
+</ul>
+<p>@protocol 协议名称 &lt;协议1, 协议2&gt;</p>
+<p>@end</p>
+</li>
+</ul>
+</li>
+<li><p>基协议</p>
+<ul>
+<li>NSObject是一个基类，最根本最基本的类，任何其他类最终都要继承它</li>
+<li>其实还有一个协议，名字也叫NSObject，它是一个基协议，最根本最基本的协议</li>
+<li>NSObject协议中声明很多最基本的方法，比如description、retain、release等</li>
+<li>建议每个新的协议都要遵守NSObject协议</li>
+</ul>
+</li>
+<li><p>定义变量时指定协议</p>
+<p> // NSObject类型的对象，并且要遵守NSCopying协议</p>
+<ul>
+<li><p>NSObject<nscopying> *obj;</nscopying></p>
+<p>// 任何OC对象，并且要遵守NSCoding协议</p>
+</li>
+<li><p>id<nscoding> obj2;</nscoding></p>
+</li>
+</ul>
+</li>
+</ol>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/01/14/nil与null/" data-id="cifktzrof0002cuylbc3ci4hk" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/04/30/协议/" data-id="cifku6sg0000cebyl6u7yc1tv" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-内存管理" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/04/30/内存管理/" class="article-date">
+  <time datetime="2015-04-30T13:25:44.000Z" itemprop="datePublished">2015-04-30</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/04/30/内存管理/">内存管理</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="内存管理">内存管理</h2><p><strong>内存管理机制：引用计数</strong></p>
+<ol>
+<li><p>引用计数的计算</p>
+<ul>
+<li>alloc 、new 、copy(copy生成接收对象的一个副本) //使用这三个方法创建对象时，对象的引用计数器为1<ul>
+<li><ul>
+<li>(id) retain; //给对象发送retain消息后，对象的引用计数器加1</li>
+</ul>
+</li>
+<li><ul>
+<li>(void) release; //给对像发送release消息后，对象的引用计数器减1</li>
+</ul>
+</li>
+<li>-(void)dealloc; //当一个对象的引用计数器变为0而即将被销毁时,Objective-C自动向对                             象发送一条dealloc消息，我们通常都会在自己的对象中重写dealloc方法</li>
+<li><ul>
+<li>(unsigned) retainCount;//获取当前对象的引用计数器的值</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>非ARC环境下内存的管理</p>
+<p> 当某个对象被持有有，［对象名 retain］；<br> 当某个对象不再被持有时，［对象名 release］；</p>
+</li>
+<li><p>ARC环境下内存的管理</p>
+<ul>
+<li><p>规则</p>
+<p>  只要还有一个强指针变量指向对象，对象就会保持在内存中</p>
+</li>
+<li><p>强引用，弱引用</p>
+<p>  ➢    默认所有实例变量和局部变量都是Strong指针</p>
+<p>  ➢    弱指针指向的对象被回收后，弱指针会自动变为nil指针，不会引发野指针错误。其修饰符号为__weak;</p>
+</li>
+<li><p>注意点</p>
+<pre><code>➢    不能调用<span class="operator"><span class="keyword">release</span>、retain、autorelease、retainCount</span>
+</code></pre><p> ➢    可以重写dealloc，但是不能调用[super dealloc]</p>
+<p> ➢    @property : 想长期拥有某个对象，应该用strong，其他对象用weak</p>
+<p> ➢    其他基本数据类型依然用assign</p>
+<p> ➢    两端互相引用时，一端用strong、一端用weak</p>
+<ol>
+<li>自动释放池</li>
+</ol>
+</li>
+<li>自动释放池是一个存放实体的集合，这些实体可能是对象，这些对象能够被自动释放。</li>
+<li><p>/ - (id) autorelease; //是NSObject类提供的方法，此方法在某一个预定的时候，向对象发送release消息，返回值是接收消息的对象。实际上当给一个对象发送autorelease消息的时候，就是将这个对象添加到的自动释放池(NSAutoreleasePool)中，当自动释放池销毁时，会向该池中的所有对象发送release消息。</p>
+<p>如： - (NSString <em>) description<br>{<br>  NSString </em>desc;<br>   desc = [[NSString alloc] initWithFormat: @” I am %d years old”,29];<br>   return ([desc autorelease]);<br>}</p>
+</li>
+</ul>
+</li>
+<li><p>内存管理规则</p>
+<ul>
+<li>如果我使用了new , alloc 或者copy方法获得一个对象，则我必须释放或自释放该对象。</li>
+<li>如果你对对象调用了retain消息，那么你必须负责释放(release)这个对象，保证retain和release的使用次数相等。</li>
+</ul>
+</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2015/04/30/内存管理/" data-id="cifku6sg2000debyl9riua0t4" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-OC" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/04/30/OC/" class="article-date">
+  <time datetime="2015-04-30T03:49:42.000Z" itemprop="datePublished">2015-04-30</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/04/30/OC/">OC</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="http://www.52nx.net/article/UploadPic/2011-10/2011101515463073132.png" alt="image"></p>
+<p>##NSLog 与 printf的不同</p>
+<pre><code><span class="number">1.</span> NSLog接收oc字符串作为参数，<span class="built_in">printf</span>接收c语言的字符串作为参数
+<span class="number">2.</span> NSLog输出后会自动换行，<span class="built_in">printf</span>在输出后不会自动换行
+<span class="number">3.</span> 使用NSLog时，需要包含头文件<span class="preprocessor">#import &lt;Foundition/Foundition.h&gt;；而使用printf时，需要包含头文件#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span></span>
+<span class="number">4.</span> NSLog可以输出日期，时间戳，进程号等信息，而<span class="built_in">printf</span>不能输出这些信息
+</code></pre><h2 id="常用术语">常用术语</h2><p>面向过程 ： Procedure Oriented</p>
+<p>面向对象 ： Object Oriented ，<strong>简称OO</strong></p>
+<p>面向编程 ： Object Oriented Programming，<strong>简称OOP</strong></p>
+<h2 id="OC_语法">OC 语法</h2><ol>
+<li><strong>类的声明</strong></li>
+</ol>
+<pre><code><span class="class"><span class="keyword">@interface</span> 类名：父类（默认为 <span class="title">NSObject</span> 该类时根类）</span>
+
+{
+
+    定义成员变量；（默认情况下，成员变量为protect类型，）
+
+}    
+
+（ 可以用<span class="keyword">@public</span>将其定义为public类型，此时定义的属性或变量允许被外界访问）
+<span class="keyword">@property</span>(<span class="keyword">nonatomic</span>/atomic,<span class="keyword">readonly</span>/<span class="keyword">readwrite</span>,<span class="keyword">assign</span>/<span class="keyword">strong</span>/retain/wake)类型 属性名；（定义属性可以自动生成setter和getter方法）
+
+声明类方法；（标识 ＋ 该方法向类发消息）
+
+声明实例方法； （标识 － 该方法向对象发消息） 声明类方法时 返回值最好定义为`instancetype`类型
+
+<span class="keyword">@end</span>
+</code></pre><ol>
+<li><p><strong>类的实现</strong></p>
+<pre><code> <span class="variable">@implemention</span> 类名
+
+ － 实例方法
+｛
+        实现代码； 
+ ｝
+
+ ＋ 类fangfa
+｛ 
+        实现代码； 
+ ｝
+
+ 重写父类方法；
+ 如：descripition、 dealloc、init等
+
+ <span class="variable">@end</span>
+</code></pre><p>3.<strong>创建对象</strong></p>
+<pre><code><span class="number">1.</span>包含所创建类的头文件
+<span class="number">2.</span>类名 ＊对象名；
+<span class="number">2.1</span> 类名 ＊对象名 ＝ ［［类名 alloc］init］；（创建对象并为其分配内存、初始化）
+<span class="number">2.2</span> 类名 ＊对象名 ＝ ［类名 <span class="keyword">new</span>］；（每次都会创建出新的对象，并且返回对象的地址。）
+<span class="number">3.</span> 给对象赋值；（可以调用相应的类方法）；
+<span class="number">4.</span> 给对象发消息，完成所需要进行的操作；［对象 方法］；
+</code></pre></li>
+<li><p><strong>匿名对象</strong></p>
+<pre><code>方法调用：
+
+    ［［类名 <span class="literal">new</span>］方法］；／［［［类名 alloc］init］方法］；
+
+属性访问：
+
+    ［类名 <span class="literal">new</span>］<span class="subst">-&gt;</span>属性 ＝ 赋值；（外界访问定义为<span class="keyword">public</span>类型的属性）
+</code></pre></li>
+</ol>
+<h2 id="OC方法和函数的区别">OC方法和函数的区别</h2><pre><code>1. OC方法的声明只能在@interface 和 @<span class="operator"><span class="keyword">end</span>之间，只能在@implementation 和 @<span class="keyword">end</span>之间。即OC方法独立于类存在。
+<span class="number">2.</span> <span class="keyword">C</span>函数不属于类，跟类没有联系，<span class="keyword">C</span>函数所有权只属于定义函数的文件
+<span class="number">3.</span> <span class="keyword">C</span>函数不能访问OC对象的成员变量。</span>
+</code></pre><h2 id="OC语法细节">OC语法细节</h2><pre><code><span class="number">1.</span> 成员变量不能在｛｝中进行初始化、不能直接拿去访问
+<span class="number">2.</span> 方法的声明不能写在@end之后
+<span class="number">3.</span> 方法不能当作函数一样调用
+<span class="number">4.</span> 成员变量、方法不能用<span class="keyword">static</span>等关键字进行修饰
+</code></pre><h2 id="OC方法注意点">OC方法注意点</h2><pre><code>方法只有声明，没有实现（经典错误，系统提示警告）
+方法没有声明，只有实现（编译器警告，但是可以调用，OC的弱语法）
+编译的时候，访问没有定义的成员变量直接报错，调用没有的方法，只是警告
+没有<span class="class"><span class="keyword">@interface</span>，纸偶@<span class="title">implemenation</span>也可以成功定义一个类</span>
+        @implemenation Dog : <span class="built_in">NSObject</span>
+        {
+            <span class="keyword">int</span> _age;
+            <span class="built_in">NSString</span> *_name;
+        }
+
+        - (<span class="keyword">void</span>)print
+        {
+            <span class="built_in">NSLog</span>(<span class="string">@"The dog's name is %@,ang de it's %d years old!"</span>,_name,_age);
+        }
+        <span class="keyword">@end</span>
+
+@implemenation 中不能声明和<span class="class"><span class="keyword">@interface</span>一样的成员变量</span>
+</code></pre><p>!!! OC中有<code>BOOL</code>基本数据类型，其值是<code>YES</code>和<code>NO</code>，而不是true 和false，它实际上是一种对带符号的自负类型（signed char）的定义（typedef），它使用8为存储空间。<code>YES定义为1，NO定义为0</code>；</p>
+<p><img src="http://www.52nx.net/article/UploadPic/2011-7/2011772043927764.png" alt="image"></p>
+<h3 id="类方法he实例方法">类方法he实例方法</h3><ol>
+<li><p><strong>类方法</strong></p>
+<pre><code>＊ 该方法是直接可以用类名来执行的方法（类本身会在内存中占据存储空间，里面有类／对象方法列表）
+＊ 以加号 ＋ 开头
+＊ 只能用类名调用，对象不能调用
+＊ 类方法不能访问实例变量（成员变量）
+＊ 使用场合：当不需要访问成员变量时，尽量使用类方法
+＊ 类方法和对象方法可以同名
+</code></pre></li>
+<li><p><strong>实例方法</strong></p>
+<pre><code>＊ 该方法是用对象名来执行的方法
+＊ 以减号 — 开头
+＊ 只能用对象名调用，类不能调用，该方法没有对象是不能被执行的
+＊ 对象方法能访问实例变量（成员变量）
+</code></pre></li>
+</ol>
+<h3 id="setter和getter方法">setter和getter方法</h3><ol>
+<li><p><strong>setter和getter方法的使用场合</strong></p>
+<pre><code>@<span class="keyword">public</span>的成员可以随意被赋植，应该使用<span class="keyword">set</span>和<span class="keyword">get</span>方法来管理成员变量的访问
+</code></pre></li>
+<li><p><strong>setter方法</strong></p>
+<pre><code>作用：用来设置成员变量，可以在方法里面过滤一些不合理的值
+命名规范：方法以<span class="keyword">set</span>开头，而且后面跟上成员变量名，成员变量名必须首字母大写，尽量形参名称不要与成员变量名重名（成员变量名最好以下划线 _ 开头）
+返回值：一般为<span class="keyword">void</span>
+</code></pre></li>
+<li><p><strong>getter方法</strong></p>
+<pre><code>作用：返回对象内部的成员变量
+命名规范：方法名和成员变量名同名
+返回值：一般与成员变量的类型相同  
+</code></pre></li>
+</ol>
+<h3 id="self关键字">self关键字</h3><ol>
+<li><p><strong>成员变量和局部变量同名</strong></p>
+<pre><code>当成员变量和局部变量同名时，采取就近原则，访问的是局部变量
+当<span class="keyword">self</span>访问成员变量，区分同名的局部变量
+</code></pre></li>
+<li><p><strong>使用细节</strong></p>
+<pre><code><span class="number">1.</span> 出现的地方：所有的OC方法中（对象方法／类方法），不能出现在函数
+<span class="number">2.</span> 作用：
+    使用“<span class="built_in">self</span><span class="built_in">.</span>属性”访问当前方法中的成员变量
+    使用“<span class="built_in">self</span><span class="subst">-&gt; </span>成员变量”访问当前方法中<span class="keyword">public</span>成员变量
+    使用“［<span class="built_in">self</span> 方法］”调用方法（类方法／实例方法）
+<span class="number">3.</span> 类方法中<span class="built_in">self</span>只能调用类方法，实例方法中<span class="built_in">self</span>只能调用实例方法
+</code></pre></li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2015/04/30/OC/" data-id="cifku6sgm000nebylmshvregx" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-实现" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/04/30/实现/" class="article-date">
+  <time datetime="2015-04-30T02:47:44.000Z" itemprop="datePublished">2015-04-30</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/04/30/实现/">实现</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="声明与实现_c_and_oc">声明与实现        c and oc</h1><h3 id="1-关于NS、@">1.关于NS、@</h3><p>历史遗留的标示符 如：NSString : 本质就是String 只不过在前面加个NS 无具体含义<br>@ ：如果想要输出字符串 必须采用OC的语法 即 ： @”字符串”</p>
+<h3 id="2-OC中BOOL类型有两种：">2.OC中BOOL类型有两种：</h3><pre><code><span class="tag">a</span>. YES : <span class="number">1</span>
+<span class="tag">b</span>. NO  : <span class="number">0</span>
+</code></pre><h3 id="3-OC是面向对象的编程语言。">3.OC是面向对象的编程语言。</h3><pre><code><span class="tag">a</span>. 定义类
+    @<span class="tag">interface</span> 类名 ：<span class="tag">NSObject</span> 
+    {    
+        <span class="comment">//声明类的属性</span>
+        <span class="comment">//成员变量（实例变量）</span>
+    }
+    <span class="comment">//声明函数</span>
+    <span class="tag">-</span> (数据类型）方法名 : (数据类型) 形参名；
+    <span class="variable">@end</span> <span class="comment">//表示类的声明的结束</span>
+b.    实现类
+    <span class="variable">@implementation</span> 类名
+     - （数据类型） 方法名 ：（数据类型） 形参名
+     {
+         <span class="comment">//具体代码</span>
+     }
+     <span class="comment">//OC中提供了一个description函数供类的对象调用，方法里面可以写满足要求的代码</span>
+     - （数据类型）description 
+     {
+         <span class="comment">//具体代码</span>
+     }
+    <span class="variable">@end</span> <span class="comment">//表示类的实现的结束</span>
+
+c. 创建类对象，并调用对象的实例变量以及在类中声明和实现的方法（一般在main方法里面实现）
+    类名 *对象名 = [类名 new];<span class="comment">//[类名 new] 表示类名发布一条new消息，创建一个类对象，然后赋给左边的对象名</span>
+    [对象名 方法名]; <span class="comment">//表示对象发布一条消息，调用类中的方法</span>
+d. 格式化标示符 %@ : 表示输出一个类对象    
+</code></pre><h3 id="4-个人关于面向过程和面向对象的认识">4.个人关于面向过程和面向对象的认识</h3><pre><code>面向过程是在解决某一问题时，采用过程化、结构化的设计方法，即先定义一些要用到的数据结构，这些数据都是为了后面的函数而定义的，然后一个函数或多个函数实现一个功能，最终达到解决问题的目的。而面向对象的设计思想是对于某些具有共同属性、行为的事物，将它们的共同属性、行为抽取出来，抽象化为一个类（OC中类也是一种数据类型），然后在类的实例化时根据不同的需要，实例化为不同的对象，从而实现不同的行为。面向对象的思想中，行为（方法）都是为数据（类）服务的，都是为了描述类而存在的，这是于面向对象不同的一点，而且采用面向对象的设计方法，可以减少许多冗余的代码，使代码更简洁，提高维护性等。
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2015/04/30/实现/" data-id="cifku6sfm0006ebylps8kqm96" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-画图" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/04/30/画图/" class="article-date">
+  <time datetime="2015-04-30T02:24:59.000Z" itemprop="datePublished">2015-04-30</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/04/30/画图/">画图</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="什么是CALayer">什么是CALayer</h1><pre><code> 在iOS系统中，你能看得见摸得着的东西基本上都是<span class="built_in">UIView</span>，比如一个按钮、一个文本标签、一个文本输入框、一个图标等等，这些都是<span class="built_in">UIView</span>。
+ * 其实<span class="built_in">UIView</span>之所以能显示在屏幕上，完全是因为它内部的一个层。
+
+* 在创建<span class="built_in">UIView</span>对象时，<span class="built_in">UIView</span>内部会自动创建一个层(即<span class="built_in">CALayer</span>对象)，通过<span class="built_in">UIView</span>的layer属性可以访问这个层。当<span class="built_in">UIView</span>需要显示到屏幕上时，会调用drawRect:方法进行绘图，并且会将所有内容绘制在自己的层上，绘图完毕后，系统会将层拷贝到屏幕上，于是就完成了<span class="built_in">UIView</span>的显示。
+
+ * 换句话说，<span class="built_in">UIView</span>本身不具备显示的功能，是它内部的层才有显示功能。
+</code></pre><h1 id="CAAnimation的常用属性">CAAnimation的常用属性</h1><pre><code>* <span class="variable">CAAnimation</span>是所有动画类的父类，但是它不能直接使用，应该使用它的子类
+
+* 常见属性有：
+
+<span class="prompt">1&gt; </span><span class="function_or_atom">duration</span>：动画的持续时间
+
+<span class="prompt">2&gt; </span><span class="function_or_atom">repeatCount</span>：动画的重复次数
+
+<span class="prompt">3&gt; </span><span class="function_or_atom">timingFunction</span>：控制动画运行的节奏
+
+<span class="function_or_atom">timingFunction</span>可选的值有：
+<span class="function_or_atom">kCAMediaTimingFunctionLinear</span>（线性）：匀速，给你一个相对静态的感觉
+<span class="function_or_atom">kCAMediaTimingFunctionEaseIn</span>（渐进）：动画缓慢进入，然后加速离开
+<span class="function_or_atom">kCAMediaTimingFunctionEaseOut</span>（渐出）：动画全速进入，然后减速的到达目的地
+<span class="function_or_atom">kCAMediaTimingFunctionEaseInEaseOut</span>（渐进渐出）：动画缓慢的进入，中间加速，然后减速的到达目的地。这个是默认的动画行为。
+<span class="prompt">4&gt; </span><span class="function_or_atom">delegate</span>：动画代理，用来监听动画的执行过程
+</code></pre><h1 id="画图常见方法">画图常见方法</h1><pre><code> <span class="built_in">CGContextRef</span> context = <span class="built_in">UIGraphicsGetCurrentContext</span>();可以获得图形上下文。
+ <span class="built_in">CGContextMoveToPoint</span>、<span class="built_in">CGContextAddLineToPoint</span>两个函数是构建描绘路径。
+ <span class="built_in">CGContextClosePath</span>(context);函数是闭合描绘路径。
+ <span class="built_in">CGContextStrokePath</span>函数是为闭合路径描边。
+ [[<span class="built_in">UIColor</span> blackColor] setStroke]设置描边的颜色。
+ [[<span class="built_in">UIColor</span> redColor] setFill]设置要填充颜色。
+ <span class="built_in">CGContextDrawPath</span>(context, k<span class="built_in">CGPathFillStroke</span>);设置描绘路径方式。常用的还有：k<span class="built_in">CGPathFill</span>和k<span class="built_in">CGPathStroke</span>
+  <span class="built_in">CGContextMoveToPoint</span>(cgContext, <span class="number">333</span>, <span class="number">0</span>);
+<span class="built_in">CGContextAddCurveToPoint</span>(cgContext, <span class="number">333</span>, <span class="number">0</span>, <span class="number">332</span>, <span class="number">26</span>, <span class="number">330</span>, <span class="number">26</span>);
+<span class="built_in">CGContextAddLineToPoint</span>(cgContext, <span class="number">296</span>, <span class="number">17</span>);
+</code></pre><p>##坐标<br>      Quartz坐标<br>      Quartz技术最开始为Mac OS X系统设计的图形技术，它的坐标原点位于左下角。<br>      UIKit坐标<br>      UIKit坐标与Quartz不同，原点位于右上角。在iOS中的UIView等控件都是基于此坐标，由于在UIView使用了Quartz坐标有时候需要转换。</p>
+<p>##变换</p>
+<pre><code>变换（transformation）修改了图形上下文中绘制图形的方式。可以通过移动、旋转或缩放实现变换。
+
+Quartz提供了多种形式的变换，其中主要：CTM（当前变换矩阵）变换和仿射（affine）变换。
+
+CTM（current transformation matrix）变换，这种变换比较简单，函数有：
+
+<span class="built_in">CGContextRotateCTM</span>，旋转坐标
+
+<span class="built_in">CGContextScaleCTM</span>，缩放坐标
+
+<span class="built_in">CGContextTranslateCTM</span>，移动原点
+</code></pre><p>#平移动画<br> 1.方法1</p>
+<pre><code><span class="number">1</span> <span class="comment">// 说明这个动画对象要对CALayer的position属性执行动画</span>
+<span class="number">2</span> CABasicAnimation *anim = [CABasicAnimation animationWithKeyPath:@<span class="string">"position"</span>];
+<span class="number">3</span> <span class="comment">// 动画持续1.5s</span>
+<span class="number">4</span> anim.duration = <span class="number">1.5</span>; 
+<span class="number">5</span> 
+<span class="number">6</span> <span class="comment">// position属性值从(50, 80)渐变到(300, 350)</span>
+<span class="number">7</span> anim.fromValue = [NSValue valueWithCGPoint:CGPointMake(<span class="number">50</span>, <span class="number">80</span>)];
+<span class="number">8</span> anim.toValue = [NSValue valueWithCGPoint:CGPointMake(<span class="number">300</span>, <span class="number">350</span>)];
+<span class="number">9</span> 
+<span class="number">10</span> <span class="comment">// 设置动画的代理</span>
+<span class="number">11</span> anim.delegate = self;
+<span class="number">12</span> 
+<span class="number">13</span> <span class="comment">// 保持动画执行后的状态</span>
+<span class="number">14</span> anim.removedOnCompletion = NO;
+ <span class="number">15</span> anim.fillMode = kCAFillModeForwards;
+<span class="number">16</span> 
+ <span class="number">17</span> <span class="comment">// 添加动画对象到图层上</span>
+ <span class="number">18</span> [_myView.layer addAnimation:anim forKey:@<span class="string">"translate"</span>];
+</code></pre><p>####* 第2行设置的keyPath是@”position”，说明要修改的是CALayer的position属性，也就是会执行平移动画</p>
+<p>####* 注意第7、8行，这里并不是直接使用CGPoint这种结构体类型，而是要先包装成NSValue对象后再使用。这2行代码表示CALayer从位置(50, 80)移动到位置(300, 350)</p>
+<p>####* 如果将第8行的toValue换成byValue，代表CALayer从位置(50, 80)开始向右移动300、向下移动350，也就是移动到位置(350, 430)</p>
+<p>####* 默认情况下，动画执行完毕后，动画会自动从CALayer上移除，CALayer又会回到原来的状态。为了保持动画执行后的状态，可以加入第14、15行代码</p>
+<p>####* 第18行后面的@”translate”是给动画对象起个名称，以后可以调用CALayer的removeAnimationForKey:方法根据动画名称停止相应的动画</p>
+<p>####* 第11行是设置动画的代理，可以监听动画的执行过程，这里设置控制器为代理。代理需要实现的方法有：</p>
+<pre><code>* <span class="number">1</span> <span class="preprocessor">#<span class="keyword">pragma</span> mark 动画开始</span>
+ <span class="number">2</span> - (<span class="keyword">void</span>)animationDidStart:(CAAnimation *)anim {
+ <span class="number">3</span>     NSLog(@<span class="string">"动画开始了"</span>);
+ <span class="number">4</span> }
+  <span class="number">5</span> 
+  <span class="number">6</span> <span class="preprocessor">#<span class="keyword">pragma</span> mark 动画结束</span>
+  <span class="number">7</span> - (<span class="keyword">void</span>)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag {
+  <span class="number">8</span>     <span class="comment">// 查看一下动画执行完毕后的position值</span>
+ <span class="number">9</span>     NSString *<span class="built_in">string</span> = NSStringFromCGPoint(_myView.layer.position);
+ <span class="number">10</span>     NSLog(@<span class="string">"动画结束了，position:%@"</span>, <span class="built_in">string</span>);
+ <span class="number">11</span> }
+</code></pre><p>打印结果为：</p>
+<p>####1 2013-04-14 23:44:26.197 CAAnimation[5995:c07] 动画开始了</p>
+<p>####2 2013-04-14 23:44:27.697 CAAnimation[5995:c07] 动画结束了，position:{100, 100}</p>
+<p>####从第2行的打印信息可以看出，实际上，动画执行完毕后，并没有真正改变CALayer的position属性的值！</p>
+<p>2.方法2</p>
+<pre><code> <span class="number">1</span> CABasicAnimation *anim = [CABasicAnimation animationWithKeyPath:@<span class="string">"transform"</span>];
+ <span class="number">2</span> anim.duration = <span class="number">1</span>;
+ <span class="number">3</span> 
+<span class="number">4</span> CATransform3D form = CATransform3DMakeTranslation(<span class="number">350</span>, <span class="number">350</span>, <span class="number">0</span>);
+<span class="number">5</span> anim.toValue = [NSValue valueWithCATransform3D:form];
+<span class="number">6</span> 
+<span class="number">7</span> [_myView.layer addAnimation:anim forKey:nil];
+</code></pre><p>####通过CALayer的transform属性实现平移动画，layer会从自己的初始位置平移到(350, 350)位置</p>
+<p>#二、缩放动画</p>
+<p>####实现缩放动画有好几种方法，这里列举2种。</p>
+<p>1.方法1</p>
+<pre><code><span class="number">1</span> CABasicAnimation *anim = [CABasicAnimation animationWithKeyPath:@<span class="string">"bounds"</span>];
+<span class="number">2</span> anim.duration = <span class="number">2</span>;
+<span class="number">3</span> 
+<span class="number">4</span> anim.toValue = [NSValue valueWithCGRect:CGRectMake(<span class="number">0</span>, <span class="number">0</span>, <span class="number">30</span>, <span class="number">30</span>)];
+<span class="number">5</span> 
+<span class="number">6</span> [_myView.layer addAnimation:anim forKey:nil];
+</code></pre><p>####layer会从原来的尺寸(100x100)变为30x30</p>
+<p>2.方法2</p>
+<pre><code><span class="number">1</span> CABasicAnimation *anim = [CABasicAnimation animationWithKeyPath:@<span class="string">"transform"</span>];
+ <span class="number">2</span> anim.duration = <span class="number">1.5</span>; <span class="comment">// 动画持续1.5s</span>
+<span class="number">3</span> 
+ <span class="number">4</span> <span class="comment">// CALayer的宽度从0.5倍变为2倍</span>
+<span class="number">5</span> <span class="comment">// CALayer的高度从0.5倍变为1.5倍</span>
+<span class="number">6</span> anim.fromValue = [NSValue valueWithCATransform3D:CATransform3DMakeScale(<span class="number">0.5</span>, <span class="number">0.5</span>, <span class="number">1</span>)];
+ <span class="number">7</span> anim.toValue  = [NSValue valueWithCATransform3D:CATransform3DMakeScale(<span class="number">2</span>, <span class="number">1.5</span>, <span class="number">1</span>)];
+ <span class="number">8</span> 
+ <span class="number">9</span> [_myView.layer addAnimation:anim forKey:nil];
+</code></pre><p>#三、旋转动画</p>
+<pre><code><span class="number">1</span> CABasicAnimation *anim = [CABasicAnimation animationWithKeyPath:@<span class="string">"transform"</span>];
+ <span class="number">2</span> anim.duration = <span class="number">1.5</span>;
+ <span class="number">3</span> 
+<span class="number">4</span> <span class="comment">// 绕着(0, 0, 1)这个向量轴顺时针旋转45°</span>
+<span class="number">5</span> anim.toValue = [NSValue valueWithCATransform3D:CATransform3DMakeRotation(M_PI_4, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>)];
+<span class="number">6</span> 
+  <span class="number">7</span> [_myView.layer addAnimation:anim forKey:nil]; 
+</code></pre><p>####其实可以不用设置fromValue，这里只设置了toValue</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2015/04/30/画图/" data-id="cifku6sfh0003ebylt5od5l8g" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-字符串与数组" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/04/30/字符串与数组/" class="article-date">
+  <time datetime="2015-04-30T02:22:43.000Z" itemprop="datePublished">2015-04-30</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/04/30/字符串与数组/">Foundation</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="字符串与数组">字符串与数组</h1><h3 id="1-NSString(不可变字符串)">1.NSString(不可变字符串)</h3><pre><code><span class="number">1.</span>创建一个字符串对象
+  <span class="built_in">NSString</span> *height;
+<span class="number">2.</span> + (instancetype)stringWithFormat:(<span class="built_in">NSString</span> *)format, ... 
+  <span class="comment">//给对象赋值 这里的stringwithformat  是个一个类方法，消息的接受者是一个类 NSString 这里的三个点是表示第二个参数是可变参数</span>
+  height = [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"your height is %d feet,%d inches"</span>,<span class="number">5</span>,<span class="number">11</span>];
+  <span class="built_in">NSLog</span>(<span class="string">@"%@"</span>,height);
+
+  <span class="built_in">NSString</span> *anotherStr = <span class="string">@"Hello,Qingyun"</span>;<span class="comment">//声明的时候直接初始化</span>
+<span class="number">3.</span>length方法。可以直接用对象调用，用来获取对象字符串的长度
+  <span class="comment">//NSUInteger 表示 unsigned long int 无符号长整形</span>
+  <span class="built_in">NSUInteger</span> length =  [anotherStr length];
+  <span class="built_in">NSLog</span>(<span class="string">@"%lu"</span>,length);
+<span class="number">4.</span> isEqualToString 判断两个字符串是否一致
+  <span class="built_in">NSString</span> *oneStr = <span class="string">@"hello,qingyun"</span>;
+  <span class="built_in">NSString</span> *twoStr = <span class="string">@"qingyun"</span>;
+  <span class="built_in">BOOL</span> isEqualOrNo = [oneStr isEqualToString:twoStr];
+ <span class="keyword">if</span> (isEqualOrNo) {
+    <span class="built_in">NSLog</span>(<span class="string">@"equal"</span>);
+ }<span class="keyword">else</span>
+    <span class="built_in">NSLog</span>(<span class="string">@"not equal"</span>);
+
+<span class="number">5.</span> compare方法
+  <span class="comment">//两个字符串比较 比较的是两个字符的在字典中得顺序 </span>
+  <span class="number">1.</span>如果相等 返回<span class="built_in">NSOrderedSame</span> 
+  <span class="number">2</span>,如果前面的字符在字典顺序在后面字符串的前面，则是升序，否则为降序
+  <span class="built_in">NSComparisonResult</span> result = [oneStr compare:twoStr];
+  <span class="keyword">switch</span> (result) {
+    <span class="keyword">case</span> <span class="built_in">NSOrderedAscending</span>:
+        <span class="built_in">NSLog</span>(<span class="string">@"Ascending"</span>);<span class="comment">//升序</span>
+        <span class="keyword">break</span>;
+    <span class="keyword">case</span> <span class="built_in">NSOrderedDescending</span> :
+        <span class="built_in">NSLog</span>(<span class="string">@"Descending"</span>);<span class="comment">//降序</span>
+        <span class="keyword">break</span>;
+    <span class="keyword">case</span> <span class="built_in">NSOrderedSame</span>:
+        <span class="built_in">NSLog</span>(<span class="string">@"Same"</span>); <span class="comment">//相同</span>
+    <span class="keyword">default</span>:
+        <span class="keyword">break</span>;
+  }
+<span class="number">6.</span>hasPrefix ,判断第一个字符串是否以第二个字符串开头 返回一个<span class="keyword">bool</span>类型的值
+  <span class="built_in">BOOL</span> isAtPre = [oneStr hasPrefix:twoStr];
+  <span class="keyword">if</span> (isAtPre) {
+     <span class="built_in">NSLog</span>(<span class="string">@"yes"</span>);
+  }<span class="keyword">else</span>
+     <span class="built_in">NSLog</span>(<span class="string">@"no"</span>);
+
+<span class="number">7.</span>hasSuffix 方法：判断第一个字符串是否以第二个字符串结尾 返回一个<span class="keyword">bool</span>类型的值
+  <span class="built_in">NSString</span> *str1 = <span class="string">@"hei.mp3"</span>;
+  <span class="built_in">NSString</span> *str2 = <span class="string">@".mp3"</span>;
+  <span class="built_in">BOOL</span> isAtBack = [str1 hasSuffix: str2];
+  <span class="keyword">if</span> (isAtBack) {
+     <span class="built_in">NSLog</span>(<span class="string">@"yes"</span>);
+  }<span class="keyword">else</span>
+     <span class="built_in">NSLog</span>(<span class="string">@"no"</span>);
+
+<span class="number">8.</span>rangeOfString方法 ： 判断twoStr在oneStr中得位置和长度
+  <span class="built_in">NSRange</span> range = [oneStr rangeOfString:twoStr];
+  <span class="built_in">NSLog</span>(<span class="string">@"%@ is at [location :%lu],[length :%lu] of %@“”%@"</span>,twoStr,range<span class="variable">.location</span>,range<span class="variable">.length</span>,oneStr);
+</code></pre><h3 id="2-NSMutableString(可变字符串)">2.NSMutableString(可变字符串)</h3><pre><code> <span class="number">1.</span>初始化<span class="built_in">NSMutableString</span> 对象 并给一个大小
+  <span class="built_in">NSMutableString</span> *mutableStr = [<span class="built_in">NSMutableString</span> stringWithCapacity:<span class="number">10</span>];
+ 注：给mutableStr 虽然在上面初始化了<span class="number">10</span>个大小的空间，但是<span class="built_in">NSMutableString</span> 可以无限制的追加字符串，只不过提供的stringWithCapacity：<span class="number">10</span> 给的是一个最优值，执行效率会更高
+<span class="number">2.</span>append : 给可变字符串追加字符
+ <span class="built_in">NSLog</span>(<span class="string">@"before append :%@"</span>,mutableStr);
+ [mutableStr appendString:<span class="string">@"Hello,World"</span>];
+ <span class="built_in">NSLog</span>(<span class="string">@"after append :%@"</span>,mutableStr);
+
+<span class="number">3.</span><span class="built_in">NSMakeRange</span>创建一个范围 的函数 <span class="built_in">NSMakeRange</span>
+  <span class="built_in">NSRange</span> mutableRange = <span class="built_in">NSMakeRange</span>(<span class="number">5</span>, <span class="number">6</span>) ;
+<span class="number">4.</span>删除上述范围内的字符 deleteCharactersInRange
+  [mutableStr deleteCharactersInRange:mutableRange];
+  <span class="built_in">NSLog</span>(<span class="string">@"after delete :%@"</span>,mutableStr);
+
+<span class="number">5.</span> 插入一段字符的函数: - (<span class="keyword">void</span>)insertString:(<span class="built_in">NSString</span> *)aString atIndex:(<span class="built_in">NSUInteger</span>)loc;
+  [mutableStr insertString:<span class="string">@",qingyun"</span> atIndex:<span class="number">5</span>];
+
+<span class="number">6.</span>查找字符串是否在字符串中，如果有并返回去具体范围信息 rangeOfString
+  <span class="built_in">NSRange</span> foundResul = [mutableStr rangeOfString:<span class="string">@"hello"</span>];
+  <span class="keyword">if</span> (foundResul<span class="variable">.location</span> != <span class="built_in">NSNotFound</span>) {
+     <span class="built_in">NSLog</span>(<span class="string">@"the str has found in %@"</span>,mutableStr);
+  }<span class="keyword">else</span>{
+     <span class="built_in">NSLog</span>(<span class="string">@"not found the str in %@"</span>,mutableStr);
+  }
+</code></pre><h3 id="3-NSArray（不可变数组）是一个Cocoa类，可以在数组中存放任意类型的_“对象”,而不能是基本数据类型">3.NSArray（不可变数组）是一个Cocoa类，可以在数组中存放任意类型的 “对象”,而不能是基本数据类型</h3><pre><code> <span class="number">1.</span>创建一个<span class="built_in">NSArray</span>数组并初始化 arrayWithObjects 并用<span class="literal">nil</span>代表数组的结尾
+  <span class="built_in">NSArray</span> *array1 = [<span class="built_in">NSArray</span>         arrayWithObjects:<span class="string">@"one"</span>,<span class="string">@"two"</span>,<span class="string">@"three"</span> , <span class="literal">nil</span>];
+  <span class="comment">//还有一种初始化数组的方法,这种方法不需要nil结尾 语法格式：@[ object...]</span>
+  <span class="built_in">NSArray</span> *array2 = @[<span class="string">@"ONE"</span>,<span class="string">@"TWO"</span>,<span class="string">@"THREE"</span>];
+<span class="number">2.</span><span class="built_in">NSArray</span> 的count 函数，返回数组的长度
+  <span class="built_in">NSUInteger</span> number1= [array1 count];
+  <span class="built_in">NSLog</span>(<span class="string">@"the number of array1 is %lu"</span>,number2);
+  <span class="built_in">NSArray</span> *array3 = array1;<span class="comment">//可以将array1的首地址赋给array3,则array3的数组内容和array2一样</span>
+<span class="number">3.</span>objectAtIndex :获取在索引值处的对象 返回的结果是一个对象 也可以直接用下标值直接获取对象
+  <span class="built_in">NSObject</span> *one = [array1 objectAtIndex:<span class="number">2</span>];
+  <span class="built_in">NSLog</span>(<span class="string">@"In the index %d of array is %@"</span>,<span class="number">2</span>,one);
+  <span class="built_in">NSLog</span>(<span class="string">@"In the index %d of array is %@"</span>,<span class="number">0</span>,array1[<span class="number">0</span>]);
+注意：在访问不可变数组的的元素时，时刻注意不要越界
+</code></pre><h3 id="4-NSMutableArray_可变数组_即可以随意的添加删除数组的对象">4.NSMutableArray 可变数组 即可以随意的添加删除数组的对象</h3><pre><code>1.类方法 <span class="rule"><span class="attribute">arrayWithCapacity</span>:<span class="value">创建一个可变数组对象并初始化一个给定大小的数组对象
+ NSMutableArray *mutableArray = [NSMutableArray arrayWithCapacity:<span class="number">10</span>]</span></span>;
+2<span class="class">.addObject</span> 对象方法 ： 向可变数组对象中添加对象元素
+  <span class="attr_selector">[mutableArray addObject:对象]</span>;
+3<span class="class">.removeObjectAtIndex</span> 对象方法 : 删除给定下标处的对象
+    <span class="attr_selector">[mutableArray removeObjectAtIndex:2]</span>;
+</code></pre><h3 id="5-OC程序设计语言中遍历数组对象的方法">5.OC程序设计语言中遍历数组对象的方法</h3><pre><code> <span class="number">1.</span><span class="keyword">for</span>循环遍历
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; [array count]; i++) {
+    <span class="built_in">NSLog</span>(<span class="string">@"%@"</span>,array[i]);}
+<span class="number">2.</span>枚举遍历
+    ①objectEnumerator 对象方法 返回一个从头到尾进行遍历数组的枚举对象
+    <span class="built_in">NSEnumerator</span> *front = [array objectEnumerator];
+    ②reverseObjectEnumerator 对象方法，返回一个从尾到头遍历数组的枚举对象
+ <span class="built_in">NSEnumerator</span> *back = [array reverseObjectEnumerator];
+ 在上面两种方式下，可以用 nextObject 方法实现数组的遍历
+ <span class="built_in">NSString</span> *temp;
+ <span class="keyword">while</span> (temp = [front nextObject]) {
+    <span class="built_in">NSLog</span>(<span class="string">@"%@"</span>,temp);
+ }
+<span class="number">3.</span>快速枚举
+    <span class="keyword">for</span> (<span class="built_in">NSString</span> *array1 <span class="keyword">in</span> array) {
+    <span class="built_in">NSLog</span>(<span class="string">@"%@"</span>,array1);
+}
+<span class="number">4.</span>在<span class="built_in">NSAraay</span>中通过代码块枚举对象的方法 enumerateObjectsUsingBlock
+  [array enumerateObjectsUsingBlock: ^(<span class="built_in">NSString</span> *string ,<span class="built_in">NSUInteger</span> index ,<span class="built_in">BOOL</span> *stop){
+    <span class="built_in">NSLog</span>(<span class="string">@"%lu"</span>,index);
+    <span class="built_in">NSLog</span>(<span class="string">@"4.%@"</span>,string);
+  }];
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2015/04/30/字符串与数组/" data-id="cifku6sfn0007ebyl7sd0it5a" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-复合" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/04/30/复合/" class="article-date">
+  <time datetime="2015-04-30T02:08:49.000Z" itemprop="datePublished">2015-04-30</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/04/30/复合/">复合</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="复合与继承">复合与继承</h1><h3 id="1-继承">1.继承</h3><pre><code>  在采用过程式的设计思想时，会出现许多重复的代码，
+极大的，降低了执行效率，为此，将这些重复的代码抽取出来
+，抽象化一个公有的类，这个类包含有一些类共有的属性、方法
+然后就可以根据需求创建一些具体的类，继承该类，
+则子类默认包含该类的实例变量，以及公有方法，
+而且子类可以复写该类提供的一些方法。
+    如：可以复写根类NSObjecr类的
+<span class="keyword">description</span>方法。这样可以极大的减少重复的代码，提高效率。
+</code></pre><h3 id="2-self_super关键字">2.self  super关键字</h3><pre><code>   <span class="keyword">self</span>关键字是一个指针，指当向对象发出消息调用方法时，
+在调用这个方法中，会隐藏传入一个<span class="keyword">self</span>指针，
+   这个<span class="keyword">self</span>指针就是代表这个消息的调用者。有时候在类的方法中，
+可以用<span class="keyword">self</span>代替类的具体对象，如[<span class="keyword">self</span> 类的方法]等等，
+   有了<span class="keyword">self</span>，则在子类中可以访问父类的属性，］、即子类会默认继承父类的属性和方法。］、    
+   在调用<span class="keyword">init</span>方法时，指向调用<span class="keyword">init</span>方法的对象。
+   子类想要初始化成功，父类也必须初始化完成。
+   有时候，需在子类中调用父类方法，此时，<span class="keyword">super</span> 代表父类，
+   但要注意，<span class="keyword">super</span> 既非指针，又不是成员变量，
+ 只是编辑器识别的指令，用于子类访问父类的内容
+</code></pre><h3 id="3-OC中方法调度的机制">3.OC中方法调度的机制</h3><pre><code>在OC中，当一个类发布一条消息，要调用某个方法，
+则在编译过程中会默认先在该类中查找该方法的具体实现代码，
+如果有就执行该类的方法，如果在本类中没有该方法的具体实现，
+则会沿着继承链一级一级的向上查找该类的父类直至根<span class="built_in">NSObject</span>
+类中是否有该方法的具体实现，如果有则执行，如果都没有，
+编译器会提出警告，如果还强制执行，则程序就会崩溃。
+</code></pre><h3 id="4-super关键字">4.super关键字</h3><pre><code><span class="keyword">super</span>既不是指针，也不是实例变量，在子类中如果想
+显式的调用父类中的方法，则可以使用<span class="keyword">super</span>关键字 如：[<span class="keyword">super</span> 父类的方法]
+</code></pre><h3 id="5-%@_打印当前调用的对象，即调用该类的description方法，返回当前对象的字符串">5.%@ 打印当前调用的对象，即调用该类的description方法，返回当前对象的字符串</h3><h3 id="6-@class:前向声明_采用该方法，可以不用import引入头文件">6.@class:前向声明 采用该方法，可以不用import引入头文件</h3><h3 id="7-组合和聚合">7.组合和聚合</h3><pre><code> 聚合：表示一种比较弱的整体和部分的关系。
+ 如 大雁和雁群、    汽车和轮胎，离开汽车，
+轮胎还是一个独立的对象，这种关系就叫做聚合。
+组合：表示一种很强烈、严重的整体和部分的关系，
+ 如鸟和翅膀，翅膀离开了鸟，就不是一个独立的对象，
+ 已经失去了意义。这种情况下就叫做组合关系
+继承 is <span class="literal">a</span>    与      复合has <span class="literal">a</span>
+</code></pre><h3 id="8-NSLog：和printf函数一样，用来打印语句，在控制台显示">8.NSLog：和printf函数一样，用来打印语句，在控制台显示</h3><h3 id="9-@class_前向声明">9.@class  前向声明</h3><pre><code>一般在类的声明中，只需让编译器知道有这样的标识符，
+ 而无需类的详细信息。
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2015/04/30/复合/" data-id="cifku6sfy000bebylmfeiifyt" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-大道生" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/04/16/大道生/" class="article-date">
+  <time datetime="2015-04-16T06:28:33.000Z" itemprop="datePublished">2015-04-16</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/04/16/大道生/">大道生</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>《德可延年》明代养生家吕坤说：【仁者可寿，德可延年，养德尤养生第一要义。】明确提出了要把道德修养、品德仁爱作为养生的准则。</p>
+<p>《安可静心》宋代文学家苏东坡认为：养生在于【安】、【和】二字。【安】即静心，【和】则顺心。【安则物之感我者轻，和则我之应物者顺】就是说，一个人对世界万物要有安和心态，以达到物我相宜之养生境界。</p>
+<p>《形神兼养》孔子曰：【君子有三戒，少之时，血气未定，戒之在色；及其壮也，血气方刚，戒之在斗；及其老也，血气既养，戒之在得。】意指养生非一朝一夕，乃贯穿人之一生，要行为检点，了解得失。</p>
+<p>《慎动寡欲》明代医学家万密斋提出养生之法有四：【一曰寡欲，慎动，三曰法时，四曰却疾】即从保健的角度说，人要节制性欲，谨慎行事，顺应时节，去除生病的隐患。</p>
+<p>《审因施养》宋代名人周守忠说：【知喜怒之损性，故豁情以宽心；知思虑之销神，故损情而内守；知语烦之侵气，故闭口而忘言；知哀乐之损寿，故抑之而不有，知情欲之窃命，故忍之而不为。五之养生勿要使七情六欲宣泄】</p>
+<p>《节怒养肝》明代医学家汪绮石说：【节嗜欲以养生，节烦恼以养神，节愤怒以养肝，节辛勤以养力，节思虑以养心，节悲哀以养肺】养生重在养身，养身即养好人的【精、气、神】。</p>
+<p>《以看养血》看些有益的书籍、电视节目以及观看山水风景等，可以使人精神愉快、脾胃健康，血液生化也就充盛，这就是【视养血】的道理。不过【久视则伤血】，必须重视掌握分寸。另外还应注意身体的保暖和膳食的营养搭配，保持气血充足。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2015/04/16/大道生/" data-id="cifku6sfv000aebylnd0ba5oq" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-继承，多态与复合" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/04/14/继承，多态与复合/" class="article-date">
+  <time datetime="2015-04-14T13:14:39.000Z" itemprop="datePublished">2015-04-14</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/04/14/继承，多态与复合/">继承，多态与复合</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="继承">继承</h2><ol>
+<li><p><strong>继承的概念</strong></p>
+<pre><code><span class="number">1.</span> is－a机制
+<span class="number">2.</span> 即当创建的多个类有共同的属性和行为时，可以抽出一个类作为父类，在父类中定义相同的属性，声明实现相同的行为（方法）；
+<span class="number">3.</span> 子类可以使用父类的所有属性和方法，并且子类可以在父类的基础上拓补自己的属性和方法，包括重写父类方法。重写父类方法时，子类对象会优先调用子类重写后的方法。
+<span class="number">4.</span> 子类属性和方法访问的过程： 如果子类没有相应的方法或属性，则去访问父类，一次递进知道找到NSObject根类，如果仍然没有找到相对应的方法和属性，则报错。
+</code></pre></li>
+<li><p><strong>继承的专业术语</strong></p>
+<pre><code>父类／超类    superclass
+子类 subclass／subclasses
+</code></pre></li>
+<li><p><strong>继承的细节</strong></p>
+<pre><code>单继承，不支持多继承
+子类和父类不能有相同的成员变量
+子类可以重写父类中声明的方法（在代码运行时，oc确保调用相应类的重写方的实现）
+</code></pre></li>
+<li><p><strong>继承的优缺点</strong></p>
+<pre><code>优点：
+在不改变原来模型的基础上，拓充方法
+建立了类与类的联系
+抽取了公共代码
+
+缺点：
+耦合性强
+</code></pre></li>
+<li><p><strong>super关键字</strong></p>
+<pre><code><span class="keyword">super</span>既不是参数，也不是实例变量，而是oc编译器提供的功能
+用于提供一种在子类中显示调用父类的方法    
+</code></pre></li>
+<li><p><strong>继承的局限性</strong></p>
+<pre><code>父类不能访问子类属性、调用子类方法
+不能继承累簇（如 <span class="built_in">NSString</span>累簇）
+</code></pre></li>
+</ol>
+<h2 id="多态">多态</h2><ol>
+<li><p><strong>多态的基本概念</strong>    </p>
+<pre><code>某一类事物的多种形态
+OC对象具有多态性
+</code></pre></li>
+<li><p><strong>多态的体现</strong></p>
+<pre><code>子类对象可以赋值给父类指针；
+如：Father *f = [children new]<span class="comment">;</span>
+父类指针可以访问对应的属性和方法
+如： f.age = 23<span class="comment">;  </span>
+    [f study]<span class="comment">;</span>
+</code></pre></li>
+<li><p><strong>多态的好处</strong></p>
+<pre><code>用父类接收参数，节省代码
+</code></pre></li>
+<li><p><strong>多态的局限性</strong></p>
+<pre><code>不能访问子类的属性（可以考虑强制转换）
+</code></pre></li>
+<li><p><strong>多态的细节</strong></p>
+<pre><code>动态绑定，在运行时根据对象的类型确定动态调用的方法
+</code></pre></li>
+</ol>
+<h2 id="复合">复合</h2><p> <strong>复合包括组合和聚合</strong></p>
+<pre><code>has－<span class="literal">a</span>机制
+组合和聚合表示将各个部分组合在一起，用于表达整体与部分的关系。在面向对象的编程思想里，就是用已有类的对象封装新的类。
+</code></pre><ul>
+<li>组合 ：表示一种<code>强的、严格的</code>整体与部分的关系，部分和整体的生命周期一样。 比如：人和人头</li>
+<li>聚合 ：表示一种<code>弱的</code>整体与部分的关系，比如： 汽车和轮胎</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2015/04/14/继承，多态与复合/" data-id="cifku6sfd0001ebylel1lfr1p" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-block" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/04/10/block/" class="article-date">
+  <time datetime="2015-04-10T13:29:57.000Z" itemprop="datePublished">2015-04-10</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/04/10/block/">block</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="BLOCK">BLOCK</h2><ol>
+<li><p>基本概念</p>
+<p> 代码块本质上是和其他变量类似。不同的是，代码块存储的数据是一个函数体。使用代码块时，可以像调用其他标准函数一样，传入参数数，并得到返回值。    </p>
+</li>
+</ol>
+<pre><code><span class="bullet">* </span>Block封装了一段代码,可以在任何时候执行
+<span class="bullet">* </span>Block可以作为函数参数或者函数的返回值，而其本身又可以带输入参数或返回值。
+<span class="bullet">* </span>苹果官方建议尽量多用block。在多线程、异步任务、集合遍历、集合排序、动画转场用的很多
+</code></pre><ol>
+<li><p>定义</p>
+<pre><code><span class="keyword">int</span> (^MySum)(<span class="keyword">int</span>, <span class="keyword">int</span>) = ^(<span class="keyword">int</span> a, <span class="keyword">int</span> b) {
+<span class="keyword">return</span> a+b;
+};
+</code></pre><p>定义了一个叫MySum的blocks对象，它带有两个int参数，返回int。等式右边就是blocks的具体实现</p>
+</li>
+<li><p>对变量的访问权限</p>
+<ul>
+<li>对全局变量具有读写权限 </li>
+<li>对静态变量具有读写权限</li>
+<li>对局部变量只有访问权限（可以用<code>__block</code>修饰局部变量，这样可以对其进行修改）</li>
+</ul>
+</li>
+<li><p>与函数指针的对比</p>
+<p> <strong>定义函数指针</strong><br> int (<em>p)(int,int);<br> <em>*定义Blocks</em></em><br> int (^Blocks)(int,int);</p>
+<p> <strong>调用函数指针</strong><br> (<em>p)(10, 20);<br> <em>*调用Blocks</em></em><br> Blocks(10, 20);</p>
+</li>
+<li><p>typedef和赋值</p>
+<ul>
+<li><p>在声明的同时定义变量，然后赋值<br>int (^MySum)(int,int) = ^(int a,int b) {<br>return a + b;<br>};</p>
+</li>
+<li><p>也可先用typedef先声明类型，再定义变量进行赋值<br>typedef int (^MySum)(int,int);<br>MySum sum = ^(int a,int b) {<br>return a + b;<br>}; </p>
+</li>
+</ul>
+</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2015/04/10/block/" data-id="cifku6sgl000mebylbyqzq4qi" class="article-share-link">Share</a>
       
       
     </footer>
@@ -126,7 +1082,7 @@
   
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+      <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
     </nav>
   
 </section>
@@ -143,7 +1099,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">April 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">March 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">January 2015</a><span class="archive-list-count">1</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/05/">May 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">April 2015</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">March 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">January 2015</a><span class="archive-list-count">1</span></li></ul>
     </div>
   </div>
 

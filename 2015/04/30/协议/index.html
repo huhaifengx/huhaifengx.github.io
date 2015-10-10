@@ -3,18 +3,66 @@
 <head>
   <meta charset="utf-8">
   
-  <title>house | Hexo</title>
+  <title>协议 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description">
+  <meta name="description" content="协议
+基本用途
+
+可以用来声明一大堆方法（不能声明成员变量）
+只要某个类遵守了这个协议，就相当于拥有这个协议中的所有方法声明
+只要父类遵守了某个协议，就相当于子类也遵守了    
+
+
+格式 @protocol 协议名
+ 方法声明列表
+ @end
+ 某个类遵守某个协议
+ @interface 类名 : 父类名&amp;lt;协议名&amp;gt;
+ @end
+
+关键字
+ 协议中有2个关键字可以控制方法是否要实现（默">
 <meta property="og:type" content="article">
-<meta property="og:title" content="house">
-<meta property="og:url" content="http://yoursite.com/2015/10/10/house/index.html">
+<meta property="og:title" content="协议">
+<meta property="og:url" content="http://yoursite.com/2015/04/30/协议/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description">
-<meta property="og:updated_time" content="2015-10-10T08:00:08.000Z">
+<meta property="og:description" content="协议
+基本用途
+
+可以用来声明一大堆方法（不能声明成员变量）
+只要某个类遵守了这个协议，就相当于拥有这个协议中的所有方法声明
+只要父类遵守了某个协议，就相当于子类也遵守了    
+
+
+格式 @protocol 协议名
+ 方法声明列表
+ @end
+ 某个类遵守某个协议
+ @interface 类名 : 父类名&amp;lt;协议名&amp;gt;
+ @end
+
+关键字
+ 协议中有2个关键字可以控制方法是否要实现（默">
+<meta property="og:updated_time" content="2015-04-30T13:28:10.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="house">
-<meta name="twitter:description">
+<meta name="twitter:title" content="协议">
+<meta name="twitter:description" content="协议
+基本用途
+
+可以用来声明一大堆方法（不能声明成员变量）
+只要某个类遵守了这个协议，就相当于拥有这个协议中的所有方法声明
+只要父类遵守了某个协议，就相当于子类也遵守了    
+
+
+格式 @protocol 协议名
+ 方法声明列表
+ @end
+ 某个类遵守某个协议
+ @interface 类名 : 父类名&amp;lt;协议名&amp;gt;
+ @end
+
+关键字
+ 协议中有2个关键字可以控制方法是否要实现（默">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -60,10 +108,10 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-house" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-协议" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2015/10/10/house/" class="article-date">
-  <time datetime="2015-10-10T08:00:08.000Z" itemprop="datePublished">2015-10-10</time>
+    <a href="/2015/04/30/协议/" class="article-date">
+  <time datetime="2015-04-30T13:27:37.000Z" itemprop="datePublished">2015-04-30</time>
 </a>
     
   </div>
@@ -74,7 +122,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      house
+      协议
     </h1>
   
 
@@ -82,11 +130,63 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <h2 id="协议">协议</h2><ol>
+<li><p>基本用途</p>
+<ul>
+<li>可以用来声明一大堆方法（不能声明成员变量）</li>
+<li>只要某个类遵守了这个协议，就相当于拥有这个协议中的所有方法声明</li>
+<li>只要父类遵守了某个协议，就相当于子类也遵守了    </li>
+</ul>
+</li>
+<li><p>格式<br> @protocol 协议名</p>
+<p> 方法声明列表</p>
+<p> @end</p>
+<p> 某个类遵守某个协议</p>
+<p> @interface 类名 : 父类名&lt;协议名&gt;</p>
+<p> @end</p>
+</li>
+<li><p>关键字</p>
+<p> 协议中有2个关键字可以控制方法是否要实现（默认是@required），在大多数情况下，用途在于程序员之间的交流</p>
+<ul>
+<li>@required: 该关键字以下且@optional关键字以上的方法必须要实现（若不实现，编译器会发出警告</li>
+<li>@optional: 该关键字以下且@required关键字以上的方法可以选择性的实现</li>
+</ul>
+</li>
+<li><p>协议遵守协议</p>
+<ul>
+<li><p>一个协议可以遵守其他多个协议，多个协议之间用逗号 , 隔开</p>
+<ul>
+<li>一个协议遵守了其他协议，就相当于拥有了其他协议中的方法声明</li>
+</ul>
+<p>@protocol 协议名称 &lt;协议1, 协议2&gt;</p>
+<p>@end</p>
+</li>
+</ul>
+</li>
+<li><p>基协议</p>
+<ul>
+<li>NSObject是一个基类，最根本最基本的类，任何其他类最终都要继承它</li>
+<li>其实还有一个协议，名字也叫NSObject，它是一个基协议，最根本最基本的协议</li>
+<li>NSObject协议中声明很多最基本的方法，比如description、retain、release等</li>
+<li>建议每个新的协议都要遵守NSObject协议</li>
+</ul>
+</li>
+<li><p>定义变量时指定协议</p>
+<p> // NSObject类型的对象，并且要遵守NSCopying协议</p>
+<ul>
+<li><p>NSObject<nscopying> *obj;</nscopying></p>
+<p>// 任何OC对象，并且要遵守NSCoding协议</p>
+</li>
+<li><p>id<nscoding> obj2;</nscoding></p>
+</li>
+</ul>
+</li>
+</ol>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/10/10/house/" data-id="cifku6sgh000kebyl79052gv8" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/04/30/协议/" data-id="cifku6sg0000cebyl6u7yc1tv" class="article-share-link">Share</a>
       
       
     </footer>
@@ -95,19 +195,19 @@
     
 <nav id="article-nav">
   
-    <a href="/2015/10/10/Mac搭建hexo指南/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2015/05/04/类别/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Newer</strong>
       <div class="article-nav-title">
         
-          (no title)
+          类别
         
       </div>
     </a>
   
   
-    <a href="/2015/10/10/huhaifeng/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2015/04/30/内存管理/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">huhaifeng</div>
+      <div class="article-nav-title">内存管理</div>
     </a>
   
 </nav>

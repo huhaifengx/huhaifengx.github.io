@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>继承，多态与复合 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="继承
+继承的概念
+1. is－a机制
+2. 即当创建的多个类有共同的属性和行为时，可以抽出一个类作为父类，在父类中定义相同的属性，声明实现相同的行为（方法）；
+3. 子类可以使用父类的所有属性和方法，并且子类可以在父类的基础上拓补自己的属性和方法，包括重写父类方法。重写父类方法时，子类对象会优先调用子类重写后的方法。
+4. 子类属性和方法访问的过程： 如果子类没有相应的方法或属性，则去访问父类，一">
+<meta property="og:type" content="article">
+<meta property="og:title" content="继承，多态与复合">
+<meta property="og:url" content="http://yoursite.com/2015/04/14/继承，多态与复合/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="继承
+继承的概念
+1. is－a机制
+2. 即当创建的多个类有共同的属性和行为时，可以抽出一个类作为父类，在父类中定义相同的属性，声明实现相同的行为（方法）；
+3. 子类可以使用父类的所有属性和方法，并且子类可以在父类的基础上拓补自己的属性和方法，包括重写父类方法。重写父类方法时，子类对象会优先调用子类重写后的方法。
+4. 子类属性和方法访问的过程： 如果子类没有相应的方法或属性，则去访问父类，一">
+<meta property="og:updated_time" content="2015-04-30T13:15:12.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="继承，多态与复合">
+<meta name="twitter:description" content="继承
+继承的概念
+1. is－a机制
+2. 即当创建的多个类有共同的属性和行为时，可以抽出一个类作为父类，在父类中定义相同的属性，声明实现相同的行为（方法）；
+3. 子类可以使用父类的所有属性和方法，并且子类可以在父类的基础上拓补自己的属性和方法，包括重写父类方法。重写父类方法时，子类对象会优先调用子类重写后的方法。
+4. 子类属性和方法访问的过程： 如果子类没有相应的方法或属性，则去访问父类，一">
+  
+    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-继承，多态与复合" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/04/14/继承，多态与复合/" class="article-date">
+  <time datetime="2015-04-14T13:14:39.000Z" itemprop="datePublished">2015-04-14</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      继承，多态与复合
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="继承">继承</h2><ol>
+<li><p><strong>继承的概念</strong></p>
+<pre><code><span class="number">1.</span> is－a机制
+<span class="number">2.</span> 即当创建的多个类有共同的属性和行为时，可以抽出一个类作为父类，在父类中定义相同的属性，声明实现相同的行为（方法）；
+<span class="number">3.</span> 子类可以使用父类的所有属性和方法，并且子类可以在父类的基础上拓补自己的属性和方法，包括重写父类方法。重写父类方法时，子类对象会优先调用子类重写后的方法。
+<span class="number">4.</span> 子类属性和方法访问的过程： 如果子类没有相应的方法或属性，则去访问父类，一次递进知道找到NSObject根类，如果仍然没有找到相对应的方法和属性，则报错。
+</code></pre></li>
+<li><p><strong>继承的专业术语</strong></p>
+<pre><code>父类／超类    superclass
+子类 subclass／subclasses
+</code></pre></li>
+<li><p><strong>继承的细节</strong></p>
+<pre><code>单继承，不支持多继承
+子类和父类不能有相同的成员变量
+子类可以重写父类中声明的方法（在代码运行时，oc确保调用相应类的重写方的实现）
+</code></pre></li>
+<li><p><strong>继承的优缺点</strong></p>
+<pre><code>优点：
+在不改变原来模型的基础上，拓充方法
+建立了类与类的联系
+抽取了公共代码
+
+缺点：
+耦合性强
+</code></pre></li>
+<li><p><strong>super关键字</strong></p>
+<pre><code><span class="keyword">super</span>既不是参数，也不是实例变量，而是oc编译器提供的功能
+用于提供一种在子类中显示调用父类的方法    
+</code></pre></li>
+<li><p><strong>继承的局限性</strong></p>
+<pre><code>父类不能访问子类属性、调用子类方法
+不能继承累簇（如 <span class="built_in">NSString</span>累簇）
+</code></pre></li>
+</ol>
+<h2 id="多态">多态</h2><ol>
+<li><p><strong>多态的基本概念</strong>    </p>
+<pre><code>某一类事物的多种形态
+OC对象具有多态性
+</code></pre></li>
+<li><p><strong>多态的体现</strong></p>
+<pre><code>子类对象可以赋值给父类指针；
+如：Father *f = [children new]<span class="comment">;</span>
+父类指针可以访问对应的属性和方法
+如： f.age = 23<span class="comment">;  </span>
+    [f study]<span class="comment">;</span>
+</code></pre></li>
+<li><p><strong>多态的好处</strong></p>
+<pre><code>用父类接收参数，节省代码
+</code></pre></li>
+<li><p><strong>多态的局限性</strong></p>
+<pre><code>不能访问子类的属性（可以考虑强制转换）
+</code></pre></li>
+<li><p><strong>多态的细节</strong></p>
+<pre><code>动态绑定，在运行时根据对象的类型确定动态调用的方法
+</code></pre></li>
+</ol>
+<h2 id="复合">复合</h2><p> <strong>复合包括组合和聚合</strong></p>
+<pre><code>has－<span class="literal">a</span>机制
+组合和聚合表示将各个部分组合在一起，用于表达整体与部分的关系。在面向对象的编程思想里，就是用已有类的对象封装新的类。
+</code></pre><ul>
+<li>组合 ：表示一种<code>强的、严格的</code>整体与部分的关系，部分和整体的生命周期一样。 比如：人和人头</li>
+<li>聚合 ：表示一种<code>弱的</code>整体与部分的关系，比如： 汽车和轮胎</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2015/04/14/继承，多态与复合/" data-id="cifku6sfd0001ebylel1lfr1p" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2015/04/16/大道生/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          大道生
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2015/04/10/block/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">block</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  
+    
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/05/">May 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">April 2015</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">March 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">January 2015</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2015/10/10/Mac搭建hexo指南/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2015/10/10/house/">house</a>
+          </li>
+        
+          <li>
+            <a href="/2015/10/10/huhaifeng/">huhaifeng</a>
+          </li>
+        
+          <li>
+            <a href="/2015/10/10/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2015/10/10/huhaifengx-1/">huhaifengx</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2015 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+
+<script src="/js/script.js" type="text/javascript"></script>
+
+  </div>
+</body>
+</html>

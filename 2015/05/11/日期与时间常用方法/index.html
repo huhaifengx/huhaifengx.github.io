@@ -3,18 +3,30 @@
 <head>
   <meta charset="utf-8">
   
-  <title>house | Hexo</title>
+  <title>日期与时间常用方法 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description">
+  <meta name="description" content="##日期与时间
+ 1.NSDate *date = [NSDate date];//当前日期
+ 2.NSDate *date1 = [NSDate distantFuture];//未来随机日前
+ 3.NSDate *date2 = [NSDate distantPast];//过去随机日期
+ 4.NSTimeInterval time = [date2 timeIntervalSinceDate">
 <meta property="og:type" content="article">
-<meta property="og:title" content="house">
-<meta property="og:url" content="http://yoursite.com/2015/10/10/house/index.html">
+<meta property="og:title" content="日期与时间常用方法">
+<meta property="og:url" content="http://yoursite.com/2015/05/11/日期与时间常用方法/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description">
-<meta property="og:updated_time" content="2015-10-10T08:00:08.000Z">
+<meta property="og:description" content="##日期与时间
+ 1.NSDate *date = [NSDate date];//当前日期
+ 2.NSDate *date1 = [NSDate distantFuture];//未来随机日前
+ 3.NSDate *date2 = [NSDate distantPast];//过去随机日期
+ 4.NSTimeInterval time = [date2 timeIntervalSinceDate">
+<meta property="og:updated_time" content="2015-05-11T12:58:36.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="house">
-<meta name="twitter:description">
+<meta name="twitter:title" content="日期与时间常用方法">
+<meta name="twitter:description" content="##日期与时间
+ 1.NSDate *date = [NSDate date];//当前日期
+ 2.NSDate *date1 = [NSDate distantFuture];//未来随机日前
+ 3.NSDate *date2 = [NSDate distantPast];//过去随机日期
+ 4.NSTimeInterval time = [date2 timeIntervalSinceDate">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -60,10 +72,10 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-house" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-日期与时间常用方法" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2015/10/10/house/" class="article-date">
-  <time datetime="2015-10-10T08:00:08.000Z" itemprop="datePublished">2015-10-10</time>
+    <a href="/2015/05/11/日期与时间常用方法/" class="article-date">
+  <time datetime="2015-05-11T12:57:25.000Z" itemprop="datePublished">2015-05-11</time>
 </a>
     
   </div>
@@ -74,7 +86,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      house
+      日期与时间常用方法
     </h1>
   
 
@@ -82,11 +94,24 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <p>##日期与时间</p>
+<pre><code> <span class="number">1.</span><span class="built_in">NSDate</span> *date = [<span class="built_in">NSDate</span> date];<span class="comment">//当前日期</span>
+ <span class="number">2.</span><span class="built_in">NSDate</span> *date1 = [<span class="built_in">NSDate</span> distantFuture];<span class="comment">//未来随机日前</span>
+ <span class="number">3.</span><span class="built_in">NSDate</span> *date2 = [<span class="built_in">NSDate</span> distantPast];<span class="comment">//过去随机日期</span>
+ <span class="number">4.</span><span class="built_in">NSTimeInterval</span> time = [date2 timeIntervalSinceDate:date1];<span class="comment">//日期差，单位s</span>
+ <span class="number">5.</span><span class="built_in">NSDate</span> *date3 = [<span class="built_in">NSDate</span> dateWithTimeIntervalSinceNow:<span class="number">200</span>];<span class="comment">//当前日期加200秒</span>
+ <span class="number">6.</span><span class="built_in">NSDate</span> *date4 = [date earlierDate:date3];<span class="comment">//返回较早日期</span>
+<span class="comment">//日期格式化</span>
+ <span class="number">7.</span><span class="built_in">NSDateFormatter</span> *formatter = [[<span class="built_in">NSDateFormatter</span> alloc]init];
+formatter<span class="variable">.dateFormat</span> = <span class="string">@"yy-MM-dd HH:mm:ss"</span>;
+<span class="built_in">NSString</span> *dateString = [formatter stringFromDate:date4];
+<span class="number">8.</span><span class="comment">//字符串转化为日期</span>
+<span class="built_in">NSDate</span> *date5 = [formatter dateFromString:<span class="string">@"14-12-12 03:56:34"</span>];
+</code></pre>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/10/10/house/" data-id="cifku6sgh000kebyl79052gv8" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/05/11/日期与时间常用方法/" data-id="cifku6sfj0004ebylswktdb7x" class="article-share-link">Share</a>
       
       
     </footer>
@@ -95,19 +120,19 @@
     
 <nav id="article-nav">
   
-    <a href="/2015/10/10/Mac搭建hexo指南/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2015/10/10/huhaifengx/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Newer</strong>
       <div class="article-nav-title">
         
-          (no title)
+          @huhaifengx
         
       </div>
     </a>
   
   
-    <a href="/2015/10/10/huhaifeng/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2015/05/04/字符串/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">huhaifeng</div>
+      <div class="article-nav-title">字符数组</div>
     </a>
   
 </nav>
