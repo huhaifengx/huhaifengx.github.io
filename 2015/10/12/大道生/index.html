@@ -3,18 +3,21 @@
 <head>
   <meta charset="utf-8">
   
-  <title>house | Hexo</title>
+  <title>Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description">
+  <meta name="description" content="在iOS7之前，想要实现语音播报文字内容，可能需要第三方资源库来实现。现在在iOS7上，系统为我们提供了语音播报文字的功能，我们不仅可以播报英语内容，也可以播报汉语文字，所以对于开发者来说真是个福音如下代码所示，
+if( [[[UIDevice currentDevice] systemVersion] integerValue] &amp;gt;= 7.0){    AVSpeechUtterance">
 <meta property="og:type" content="article">
-<meta property="og:title" content="house">
-<meta property="og:url" content="http://yoursite.com/2015/10/10/house/index.html">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://yoursite.com/2015/10/12/大道生/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description">
-<meta property="og:updated_time" content="2015-10-10T08:00:08.000Z">
+<meta property="og:description" content="在iOS7之前，想要实现语音播报文字内容，可能需要第三方资源库来实现。现在在iOS7上，系统为我们提供了语音播报文字的功能，我们不仅可以播报英语内容，也可以播报汉语文字，所以对于开发者来说真是个福音如下代码所示，
+if( [[[UIDevice currentDevice] systemVersion] integerValue] &amp;gt;= 7.0){    AVSpeechUtterance">
+<meta property="og:updated_time" content="2015-10-12T03:23:19.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="house">
-<meta name="twitter:description">
+<meta name="twitter:title" content="Hexo">
+<meta name="twitter:description" content="在iOS7之前，想要实现语音播报文字内容，可能需要第三方资源库来实现。现在在iOS7上，系统为我们提供了语音播报文字的功能，我们不仅可以播报英语内容，也可以播报汉语文字，所以对于开发者来说真是个福音如下代码所示，
+if( [[[UIDevice currentDevice] systemVersion] integerValue] &amp;gt;= 7.0){    AVSpeechUtterance">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -60,33 +63,28 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-house" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-大道生" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2015/10/10/house/" class="article-date">
-  <time datetime="2015-10-10T08:00:08.000Z" itemprop="datePublished">2015-10-10</time>
+    <a href="/2015/10/12/大道生/" class="article-date">
+  <time datetime="2015-10-12T03:23:19.000Z" itemprop="datePublished">2015-10-12</time>
 </a>
     
   </div>
   <div class="article-inner">
     
     
-      <header class="article-header">
-        
-  
-    <h1 class="article-title" itemprop="name">
-      house
-    </h1>
-  
-
-      </header>
-    
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <p>在iOS7之前，想要实现语音播报文字内容，可能需要第三方资源库来实现。现在在iOS7上，系统为我们提供了语音播报文字的功能，我们不仅可以播报英语内容，也可以播报汉语文字，所以对于开发者来说真是个福音如下代码所示，</p>
+<p>if( [[[UIDevice currentDevice] systemVersion] integerValue] &gt;= 7.0)<br>{<br>    AVSpeechUtterance <em>utterance = [AVSpeechUtterance speechUtteranceWithString:warnmsg];<br>    utterance.rate </em>= 0.8;<br>    AVSpeechSynthesizer <em>synth = [[AVSpeechSynthesizer alloc] init];<br>    //获取当前系统语音<br>    NSString </em>preferredLang = @””;<br>    if (m_strLang == “zh-Hans”)<br>    {<br>        preferredLang = @”zh-CN”;<br>    }else{<br>        preferredLang = @”en-US”;<br>    }<br>    AVSpeechSynthesisVoice *voice = [AVSpeechSynthesisVoice voiceWithLanguage:[NSString stringWithFormat:@”%@”,preferredLang]];<br>    utterance.voice = voice;<br>    [synth speakUtterance:utterance];<br>    [synth release];<br>}<br>首先，判断设备的系统在iOS7或更高版本，接下来就是关键的AVSpeechUtterance和AVSpeechSynthesizer，从代价可以看出AVSpeechUtterance是设置需要播报的文字内容-warnmsg、语音速率-rate以及语言种类-preferredLang，而AVSpeechSynthesizer就是开始同步播放的类。</p>
+<p>上面的代码节选自我项目中的部分代码，有一些变量也没有实际的意义，直接拷贝肯定不行，所以想要实现该功能，还是自己写一些变量内容，例如warnmsg = @”今天天气真好，工作加油”;来测试一下。</p>
+<p>上面的代码只能在前台运行，如果退到后台的话则不能运行，如果想要在推送的时候播报文字语音，那么这就有点蛋疼了。好在也有解决方法，在AppDelegate的applicationDidLaunch的代码中加上如下代码，则可支持后台语音播报文字内容，</p>
+<p>NSError <em>error = NULL;<br>AVAudioSession </em>session = [AVAudioSession sharedInstance];<br>[session setCategory:AVAudioSessionCategoryPlayback error:&amp;error];<br>if(error) {<br>    // Do some error handling<br>}<br>[session setActive:YES error:&amp;error];<br>if (error) {<br>    // Do some error handling<br>}</p>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/10/10/house/" data-id="cifndlq85000kzqyl3gnu3ia3" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/10/12/大道生/" data-id="cifndlq7o000azqylgx3dtsv6" class="article-share-link">Share</a>
       
       
     </footer>
@@ -95,19 +93,10 @@
     
 <nav id="article-nav">
   
-    <a href="/2015/10/10/Mac搭建hexo指南/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          (no title)
-        
-      </div>
-    </a>
   
-  
-    <a href="/2015/10/10/huhaifeng/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2015/10/10/Mac搭建hexo指南/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">huhaifeng</div>
+      <div class="article-nav-title"></div>
     </a>
   
 </nav>
